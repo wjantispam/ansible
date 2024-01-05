@@ -1,0 +1,26 @@
+- name: apt | Update all packages to their latest version
+  become: yes
+  ansible.builtin.apt:
+    name: "*"
+    state: latest
+
+- name: apt | install necessary ubuntu packages
+  become: yes
+  apt:
+    pkg:
+      - curl
+      - vim
+      - git
+      - gh
+      - python3
+      - bpython
+      - fonts-firacode
+      - screen
+      - fzf
+      - ripgrep
+      - mariadb-server
+
+- name: apt | Run the equivalent of "apt-get clean" as a separate step
+  become: yes
+  apt:
+    clean: yes
