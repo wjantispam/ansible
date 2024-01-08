@@ -19,8 +19,12 @@
       - fzf
       - ripgrep
       - mariadb-server
+      - byobu 
 
-- name: apt | Run the equivalent of "apt-get clean" as a separate step
-  become: yes
-  apt:
-    clean: yes
+- name: systemd_service | enable mariadb.service
+  systemd:
+    name: mariadb.service
+    state: started
+    daemon_reload: true
+    enabled: true
+    
