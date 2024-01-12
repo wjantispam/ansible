@@ -20,6 +20,7 @@
       - ripgrep
       - mariadb-server
       - byobu 
+      - gnome-tweaks
 
 - name: systemd_service | enable mariadb.service
   systemd:
