@@ -8,19 +8,21 @@
   become: yes
   apt:
     pkg:
-      - curl
-      - vim
-      - git
-      - gh
-      - python3
-      - bpython
-      - fonts-firacode
-      - screen
-      - fzf
-      - ripgrep
-      - mariadb-server
-      - byobu 
-      - gnome-tweaks
+    - curl
+    - vim
+    - git
+    - gh
+    - htop
+    - python3
+    - bpython
+    - fonts-firacode
+    - fonts-powerline
+    - screen
+    - fzf
+    - ripgrep
+    - mariadb-server
+    - byobu 
+    - gnome-tweaks
 
 - name: systemd_service | enable mariadb.service
   systemd:
@@ -28,4 +30,24 @@
     state: started
     daemon_reload: true
     enabled: true
-    
+
+- name: Removes all anonymous user accounts
+  community.mysql.mysql_user:
+    name: ''
+    host_all: true
+    state: absent
+ 
+- name: mysql_db | set up user
+  mysql_user:
+    name: root
+    host: "{ item }"
+    password: "111"
+    login_user: root
+    login_password: "111"
+    priv: "*.*:ALL,GRANT"
+    with_items:
+      - localhost
+      - 127.0.0.1
+      
+
+   

@@ -1,0 +1,27 @@
+- name: Testing
+  hosts: ubuntu_laptop
+  tasks:
+    - name: Install Mysql and htop
+      become: yes
+      apt: 
+        state: present
+        update_cache: yes
+        pkg:
+          - python3-pip
+          - mariadb-client
+          - htop
+          - python3-dev
+          - default-libmysqlclient-dev
+          - build-essential
+          - pkg-config
+
+    - name: pip | install dependencies
+      pip:
+        name: mysqlclient # https://pypi.org/project/mysqlclient/
+
+    - name: Create database user using hashed password with all database privileges
+      mysql_user:
+        name: dean
+        password: '123'
+        encrypted: true
+        priv: '*.*:ALL'
